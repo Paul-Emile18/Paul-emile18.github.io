@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de Contact</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container, .summary-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Uniformiser les styles des boutons */
+        button, .button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 10px;
+            width: 120px; /* Largeur fixée pour les deux boutons */
+            text-align: center;
+        }
+
+        button:hover, .button:hover {
+            background-color: #218838;
+        }
+
+        .summary {
+            margin-top: 15px;
+        }
+
+        /* Centrer les boutons et les placer l'un à côté de l'autre */
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Section de partage */
+        .share-container {
+            margin-top: 30px;
+            text-align: center;
+            background-color: #e9ecef;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .share-container p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .share-container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .share-container a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Formulaire de Contact</h2>
+        <form id="contactForm">
+            <label for="name">Nom :</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email :</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="messageField">Message :</label>
+            <textarea id="messageField" name="message" rows="4" required></textarea>
+
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+
+    <div class="summary-container" id="summaryContainer" style="display:none;">
+        <h2>Récapitulatif des Données</h2>
+        <div class="summary">
+            <strong>Nom :</strong> <span id="summaryName"></span><br>
+            <strong>Email :</strong> <span id="summaryEmail"></span><br>
+            <strong>Message :</strong> <span id="summaryMessage"></span><br>
+            <strong>Date :</strong> <span id="summaryDate"></span><br>
+            <strong>Heure :</strong> <span id="summaryTime"></span>
+        </div>
+        
+        <!-- Conteneur pour centrer les boutons -->
+        <div class="button-container">
+            <button id="redirectButton">OK</button>
+            <a href="javascript:history.back()" class="button">Retour</a>
+        </div>
+
+        <!-- Section de remerciement et de proposition de partage -->
+        <div class="share-container">
+            <p>Merci pour votre message !</p>
+            <p>Si vous trouvez ce service utile, n'hésitez pas à <strong>partager</strong> le site avec vos amis :</p>
+            <p><a href="https://www.facebook.com/sharer/sharer.php?u=URL_DU_SITE" target="_blank">Partager sur Facebook</a> | 
+               <a href="https://twitter.com/intent/tweet?url=URL_DU_SITE&text=Découvrez ce super service de réparation!" target="_blank">Partager sur Twitter</a></p>
+        </div>
+    </div>
+
+    <script>
+        function saveFormData() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('messageField').value;
+
+            const date = new Date();
+            const formattedDate = date.toLocaleDateString();
+            const formattedTime = date.toLocaleTimeString();
+
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.push({ name, email, message, date: formattedDate, time: formattedTime });
+            localStorage.setItem('messages', JSON.stringify(messages));
+        }
+
+        document.getElementById('redirectButton').addEventListener('click', function() {
+            window.location.href = "home.html"; // Remplacez par l'URL de la page souhaitée
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            saveFormData();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('messageField').value;
+            const date = new Date();
+            const formattedDate = date.toLocaleDateString();
+            const formattedTime = date.toLocaleTimeString();
+
+            document.getElementById('summaryName').innerText = name;
+            document.getElementById('summaryEmail').innerText = email;
+            document.getElementById('summaryMessage').innerText = message;
+            document.getElementById('summaryDate').innerText = formattedDate;
+            document.getElementById('summaryTime').innerText = formattedTime;
+
+            document.getElementById('summaryContainer').style.display = 'block';
+            document.querySelector('.form-container').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

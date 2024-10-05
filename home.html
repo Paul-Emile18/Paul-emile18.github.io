@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reparations@gragnague</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(244, 244, 244, 0.8)), url('images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-top: 20px;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .principale {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .principale:hover {
+            transform: scale(1.02);
+        }
+        .principale .img {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .principale .img img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .principale div {
+            flex: 2;
+        }
+        .admin-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        .admin-container h2 {
+            margin-bottom: 20px;
+        }
+        .admin-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .admin-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .admin-container button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .admin-container button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        #adminContent {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bienvenue !</h1>
+        <h2>Sachez que ce site est entièrement fait par moi. <br>Veuillez m'excuser pour les problèmes. <br>Des idées ? Dites-le moi !</h2>
+    </header>
+
+    <h1>Faire réparer un appareil :</h1>
+    <div class="principale">
+        <div class="img"><img src="images/reparation.webp" alt=""></div>
+        <div>
+            <h2>Grâce à ce site, envoyez-moi un formulaire expliquant <br> le problème,
+            et je vous contacterai pour récupérer <br> l'appareil et le réparer. <br>
+            Pour plus d'infos, contactez-moi.</h2>
+            <a href="formulaire.html"><button> Cliquez ici </button></a>
+        </div>
+    </div>
+
+    <h1>Service d'impression 3D et de modélisation :</h1>
+    <div class="principale">
+        <div class="img"><img src="images/3D.jpg" alt=""></div>
+        <div>
+            <h2>Une pièce cassée et introuvable ? <br> Voici la solution ! <br>
+            Contactez-moi et faites modéliser et <br> imprimer votre pièce sur mesure ! <br>
+            <a href="formulaire.html"><button> Cliquez ici </button></a></h2>
+        </div>
+    </div>
+
+    <h1>Ou envoyez moi tout sinplement un message pour me supporter :</h1>
+    <h2>aidez moi, proposez des ameliorations pour ce cite ou autre chose ! <br>Merci de votre aide !</h2>
+    <a href="formulaire.html"><button> envoyer un message </button></a></h2>
+
+    <h1>Réparations effectuées :</h1>
+    <h2><div class="principale">Les pompes de piscine : 6 réparées avec succès.</div></h2>
+
+    <div class="principale">
+        <div class="img"><img src="images/pompe.jpg" alt=""></div>
+        <div>
+            <h2>Les pompes de piscine sont chères et tombent facilement
+            en panne à cause de l'eau. <br> Il suffit de les démonter et
+            de changer les roulements, et elles repartent pour 3-4 ans ! <br>
+            RÉSULTAT : économisez jusqu'à 500 euros !</h2>
+        </div>
+    </div>
+
+    <h2><div class="principale">Électroménagers</div></h2>
+    <h2>Voici une liste rapide des autres appareils :</h2>
+    <h2>Robot de cuisine <br> Lecteur CD <br> Thermomix <br> Plaque de cuisson <br>voitures télécomandées
+    <br>calculatrice <br>et beaucoup d'autres...</h2>
+
+    <!-- Section Accès Administrateur -->
+    <div class="admin-container" id="adminContainer">
+        <h2>Accès Administrateur</h2>
+        <label for="adminPassword">Mot de passe :</label>
+        <input type="password" id="adminPassword" required>
+        <button id="adminButton">Se connecter</button>
+        <div id="adminContent">
+            <h3>Bienvenue, Administrateur !</h3>
+            <p>Voici les messages stockés :</p>
+            <div id="adminMessages"></div>
+            <button id="clearMessagesButton">Vider les messages</button>
+            <h4>Changer le mot de passe :</h4>
+            <label for="newPassword">Nouveau mot de passe :</label>
+            <input type="password" id="newPassword" required>
+            <label for="confirmPassword">Confirmer le mot de passe :</label>
+            <input type="password" id="confirmPassword" required>
+            <button id="changePasswordButton">Changer le mot de passe</button>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour récupérer et afficher les messages
+        function displayMessages() {
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            const adminMessagesContainer = document.getElementById('adminMessages');
+            adminMessagesContainer.innerHTML = messages.map((msg, index) => `
+                <div>
+                    <strong>Nom :</strong> ${msg.name} <br>
+                    <strong>Email :</strong> ${msg.email} <br>
+                    <strong>Message :</strong> ${msg.message} <br>
+                    <strong>Date :</strong> ${msg.date} <br>
+                    <strong>Heure :</strong> ${msg.time} <br>
+                    <button onclick="deleteMessage(${index})">Supprimer</button>
+                    <hr>
+                </div>
+            `).join('');
+        }
+
+        // Événements pour l'accès admin
+        document.getElementById('adminButton').addEventListener('click', function() {
+            const password = document.getElementById('adminPassword').value;
+            const storedPassword = localStorage.getItem('adminPassword') || 'admin123';
+
+            // Vérifiez le mot de passe
+            if (password === storedPassword) {
+                document.getElementById('adminContent').style.display = 'block';
+                displayMessages(); // Afficher les messages
+            } else {
+                alert('Mot de passe incorrect.');
+            }
+        });
+
+        // Fonction pour supprimer un message par index
+        function deleteMessage(index) {
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.splice(index, 1); // Supprime le message à l'index donné
+            localStorage.setItem('messages', JSON.stringify(messages)); // Met à jour le stockage
+            displayMessages(); // Met à jour l'affichage
+        }
+
+        // Événement pour vider uniquement les messages
+        document.getElementById('clearMessagesButton').addEventListener('click', function() {
+            const confirmation = confirm('Êtes-vous sûr de vouloir vider tous les messages ? Cette action est irréversible.');
+            if (confirmation) {
+                localStorage.setItem('messages', JSON.stringify([])); // Vide uniquement les messages
+                alert('Tous les messages ont été supprimés !');
+                displayMessages(); // Rafraîchit l'affichage des messages
+            }
+        });
+
+        // Événement pour changer le mot de passe
+        document.getElementById('changePasswordButton').addEventListener('click', function() {
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Vérification des mots de passe
+            if (newPassword === confirmPassword) {
+                localStorage.setItem('adminPassword', newPassword);
+                alert('Le mot de passe a été changé avec succès.');
+            } else {
+                alert('Les mots de passe ne correspondent pas. Veuillez réessayer.');
+            }
+        });
+
+        // Fonction pour sauvegarder un message (vous pouvez intégrer cela dans le formulaire)
+        function saveFormData(name, email, message) {
+            const date = new Date();
+            const formattedDate = date.toLocaleDateString();
+            const formattedTime = date.toLocaleTimeString();
+            
+            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+            messages.push({ name, email, message, date: formattedDate, time: formattedTime });
+            localStorage.setItem('messages', JSON.stringify(messages));
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
