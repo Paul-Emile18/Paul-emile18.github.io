@@ -12,7 +12,7 @@
             padding: 20px;
         }
 
-        .form-container, .summary-container {
+        .form-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
@@ -37,58 +37,18 @@
             border-radius: 4px;
         }
 
-        /* Uniformiser les styles des boutons */
-        button, .button {
+        button {
             background-color: #28a745;
             color: #fff;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-right: 10px;
-            width: 120px; /* Largeur fixée pour les deux boutons */
-            text-align: center;
         }
 
-        button:hover, .button:hover {
+        button:hover {
             background-color: #218838;
         }
-
-        .summary {
-            margin-top: 15px;
-        }
-
-        /* Centrer les boutons et les placer l'un à côté de l'autre */
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* Section de partage */
-        .share-container {
-            margin-top: 30px;
-            text-align: center;
-            background-color: #e9ecef;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        .share-container p {
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
-
-        .share-container a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .share-container a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
 <body>
@@ -108,73 +68,62 @@
         </form>
     </div>
 
-    <div class="summary-container" id="summaryContainer" style="display:none;">
-        <h2>Récapitulatif des Données</h2>
-        <div class="summary">
-            <strong>Nom :</strong> <span id="summaryName"></span><br>
-            <strong>Email :</strong> <span id="summaryEmail"></span><br>
-            <strong>Message :</strong> <span id="summaryMessage"></span><br>
-            <strong>Date :</strong> <span id="summaryDate"></span><br>
-            <strong>Heure :</strong> <span id="summaryTime"></span>
-        </div>
-        
-        <!-- Conteneur pour centrer les boutons -->
-        <div class="button-container">
-            <button id="redirectButton">OK</button>
-            <a href="javascript:history.back()" class="button">Retour</a>
-        </div>
+    <!-- Ajouter le SDK Firebase -->
+    <script type="module">
+        // Importer les fonctions nécessaires du SDK Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
 
-        <!-- Section de remerciement et de proposition de partage -->
-        <div class="share-container">
-            <p>Merci pour votre message !</p>
-            <p>Si vous trouvez ce service utile, n'hésitez pas à <strong>partager</strong> le site avec vos amis :</p>
-            <p><a href="https://www.facebook.com/sharer/sharer.php?u=URL_DU_SITE" target="_blank">Partager sur Facebook</a> | 
-               <a href="https://twitter.com/intent/tweet?url=URL_DU_SITE&text=Découvrez ce super service de réparation!" target="_blank">Partager sur Twitter</a></p>
-        </div>
-    </div>
+        // Configuration Firebase (votre configuration spécifique)
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5q89tynS7J74xa6W8zbwZflpU98uxRag",
+            authDomain: "reparations-d4b81.firebaseapp.com",
+            databaseURL: "https://reparations-d4b81-default-rtdb.firebaseio.com",
+            projectId: "reparations-d4b81",
+            storageBucket: "reparations-d4b81.firebasestorage.app",
+            messagingSenderId: "445121565052",
+            appId: "1:445121565052:web:4d549a853bddba200d14f9"
+        };
 
-    <script>
-        function saveFormData() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('messageField').value;
+        // Initialiser Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-            const date = new Date();
-            const formattedDate = date.toLocaleDateString();
-            const formattedTime = date.toLocaleTimeString();
+        // Gestion de la soumission du formulaire
+        const form = document.getElementById("contactForm");
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // Empêcher le rechargement de la page
 
-            const messages = JSON.parse(localStorage.getItem('messages')) || [];
-            messages.push({ name, email, message, date: formattedDate, time: formattedTime });
-            localStorage.setItem('messages', JSON.stringify(messages));
-        }
+            // Récupérer les valeurs du formulaire
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("messageField").value;
 
-        document.getElementById('redirectButton').addEventListener('click', function() {
-            window.location.href = "home.html"; // Remplacez par l'URL de la page souhaitée
-        });
+            // Référence à la base de données
+            const messagesRef = ref(database, "messages");
 
-        document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            saveFormData();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('messageField').value;
-            const date = new Date();
-            const formattedDate = date.toLocaleDateString();
-            const formattedTime = date.toLocaleTimeString();
-
-            document.getElementById('summaryName').innerText = name;
-            document.getElementById('summaryEmail').innerText = email;
-            document.getElementById('summaryMessage').innerText = message;
-            document.getElementById('summaryDate').innerText = formattedDate;
-            document.getElementById('summaryTime').innerText = formattedTime;
-
-            document.getElementById('summaryContainer').style.display = 'block';
-            document.querySelector('.form-container').style.display = 'none';
+            // Ajouter une nouvelle entrée
+            const newMessageRef = push(messagesRef);
+            set(newMessageRef, {
+                name: name,
+                email: email,
+                message: message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            })
+            .then(() => {
+                alert("Message envoyé avec succès !");
+                form.reset(); // Réinitialiser le formulaire
+            })
+            .catch((error) => {
+                console.error("Erreur lors de l'envoi du message : ", error);
+                alert("Une erreur est survenue. Veuillez réessayer.");
+            });
         });
     </script>
 </body>
 </html>
+
 
 
 
