@@ -118,7 +118,7 @@
     </div>
 
     <h1>Ou envoyez moi tout simplement un message pour me supporter :</h1>
-    <h2>aidez moi, proposez des ameliorations pour ce cite ou autre chose ! <br>Merci de votre aide !</h2>
+    <h2>aidez moi, proposez des ameliorations pour ce site ou autre chose ! <br>Merci de votre aide !</h2>
     <a href="formulaire.html"><button> envoyer un message </button></a></h2>
 
     <h1>Réparations effectuées :</h1>
@@ -159,87 +159,83 @@
         </div>
     </div>
 
-    <script>
-        // Fonction pour récupérer et afficher les messages
-        function displayMessages() {
-            const messages = JSON.parse(localStorage.getItem('messages')) || [];
+    <script type="module">
+        // Importer Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+        import { getDatabase, ref, get, remove, child } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+
+        // Initialiser Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5q89tynS7J74xa6W8zbwZflpU98uxRag",
+            authDomain: "reparations-d4b81.firebaseapp.com",
+            databaseURL: "https://reparations-d4b81-default-rtdb.firebaseio.com",
+            projectId: "reparations-d4b81",
+            storageBucket: "reparations-d4b81.firebasestorage.app",
+            messagingSenderId: "445121565052",
+            appId: "1:445121565052:web:4d549a853bddba200d14f9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Fonction pour récupérer et afficher les messages
+    function displayMessages() {
+        const messagesRef = ref(db, 'messages');
+        get(messagesRef).then((snapshot) => {
             const adminMessagesContainer = document.getElementById('adminMessages');
-            adminMessagesContainer.innerHTML = messages.map((msg, index) => `
-                <div>
-                    <strong>Nom :</strong> ${msg.name} <br>
-                    <strong>Email :</strong> ${msg.email} <br>
-                    <strong>Message :</strong> ${msg.message} <br>
-                    <strong>Date :</strong> ${msg.date} <br>
-                    <strong>Heure :</strong> ${msg.time} <br>
-                    <button onclick="deleteMessage(${index})">Supprimer</button>
-                    <hr>
-                </div>
-            `).join('');
-        }
+            adminMessagesContainer.innerHTML = '';
 
-        // Événements pour l'accès admin
-        document.getElementById('adminButton').addEventListener('click', function() {
-            const password = document.getElementById('adminPassword').value;
-            const storedPassword = localStorage.getItem('adminPassword') || 'admin123';
-
-            // Vérifiez le mot de passe
-            if (password === storedPassword) {
-                document.getElementById('adminContent').style.display = 'block';
-                displayMessages(); // Afficher les messages
+            if (snapshot.exists()) {
+                const messages = snapshot.val();
+                for (let id in messages) {
+                    const msg = messages[id];
+                    adminMessagesContainer.innerHTML += `
+                        <div id="message-${id}">
+                            <strong>Nom :</strong> ${msg.name} <br>
+                            <strong>Email :</strong> ${msg.email} <br>
+                            <strong>Message :</strong> ${msg.message} <br>
+                            <strong>Date :</strong> ${msg.date} <br>
+                            <strong>Heure :</strong> ${msg.time} <br>
+                            <button onclick="deleteMessage('${id}')">Supprimer</button>
+                            <hr>
+                        </div>
+                    `;
+                }
             } else {
-                alert('Mot de passe incorrect.');
+                adminMessagesContainer.innerHTML = '<p>Aucun message trouvé.</p>';
             }
+        }).catch((error) => {
+            console.error("Erreur lors de la récupération des messages :", error);
         });
+    }
 
-        // Fonction pour supprimer un message par index
-        function deleteMessage(index) {
-            const messages = JSON.parse(localStorage.getItem('messages')) || [];
-            messages.splice(index, 1); // Supprime le message à l'index donné
-            localStorage.setItem('messages', JSON.stringify(messages)); // Met à jour le stockage
-            displayMessages(); // Met à jour l'affichage
+    // Fonction pour supprimer un message
+    window.deleteMessage = function(id) { // Ajouter la fonction à l'objet global pour le rendre accessible dans le DOM
+        const messageRef = ref(db, `messages/${id}`);
+        remove(messageRef)
+            .then(() => {
+                alert("Message supprimé.");
+                const messageElement = document.getElementById(`message-${id}`);
+                if (messageElement) {
+                    messageElement.remove(); // Supprime le message de l'interface immédiatement
+                }
+            })
+            .catch((error) => {
+                console.error("Erreur lors de la suppression :", error);
+            });
+    };
+
+    // Connexion administrateur
+    document.getElementById('adminButton').addEventListener('click', function() {
+        const password = document.getElementById('adminPassword').value;
+        const correctPassword = "admin123"; // Mot de passe par défaut
+        if (password === correctPassword) {
+            document.getElementById('adminContent').style.display = 'block';
+            displayMessages();
+        } else {
+            alert("Mot de passe incorrect.");
         }
-
-        // Événement pour vider uniquement les messages
-        document.getElementById('clearMessagesButton').addEventListener('click', function() {
-            const confirmation = confirm('Êtes-vous sûr de vouloir vider tous les messages ? Cette action est irréversible.');
-            if (confirmation) {
-                localStorage.setItem('messages', JSON.stringify([])); // Vide uniquement les messages
-                alert('Tous les messages ont été supprimés !');
-                displayMessages(); // Rafraîchit l'affichage des messages
-            }
-        });
-
-        // Événement pour changer le mot de passe
-        document.getElementById('changePasswordButton').addEventListener('click', function() {
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            // Vérification des mots de passe
-            if (newPassword === confirmPassword) {
-                localStorage.setItem('adminPassword', newPassword);
-                alert('Le mot de passe a été changé avec succès.');
-            } else {
-                alert('Les mots de passe ne correspondent pas. Veuillez réessayer.');
-            }
-        });
-
-        // Fonction pour sauvegarder un message (vous pouvez intégrer cela dans le formulaire)
-        function saveFormData(name, email, message) {
-            const date = new Date();
-            const formattedDate = date.toLocaleDateString();
-            const formattedTime = date.toLocaleTimeString();
-            
-            const messages = JSON.parse(localStorage.getItem('messages')) || [];
-            messages.push({ name, email, message, date: formattedDate, time: formattedTime });
-            localStorage.setItem('messages', JSON.stringify(messages));
-        }
-    </script>
+    });
+</script>
 </body>
 </html>
-
-
-
-
-
-
-

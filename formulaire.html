@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,7 +12,7 @@
             padding: 20px;
         }
 
-        .form-container, .summary-container {
+        .form-container {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
@@ -38,68 +37,29 @@
             border-radius: 4px;
         }
 
-        /* Uniformiser les styles des boutons */
-        button, .button {
+        button {
             background-color: #28a745;
             color: #fff;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-right: 10px;
-            width: 120px; /* Largeur fixée pour les deux boutons */
-            text-align: center;
         }
 
-        button:hover, .button:hover {
+        button:hover {
             background-color: #218838;
-        }
-
-        .summary {
-            margin-top: 15px;
-        }
-
-        /* Centrer les boutons et les placer l'un à côté de l'autre */
-        .button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* Section de partage */
-        .share-container {
-            margin-top: 30px;
-            text-align: center;
-            background-color: #e9ecef;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        .share-container p {
-            font-size: 18px;
-            margin-bottom: 15px;
-        }
-
-        .share-container a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .share-container a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h2>Formulaire de Contact</h2>
-        <form action="submit_form.php" method="POST">
+        <form id="contactForm">
             <label for="name">Nom :</label>
             <input type="text" id="name" name="name" required>
 
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email">Email (facultatif) :</label>
+            <input type="email" id="email" name="email">
 
             <label for="messageField">Message :</label>
             <textarea id="messageField" name="message" rows="4" required></textarea>
@@ -107,6 +67,69 @@
             <button type="submit">Envoyer</button>
         </form>
     </div>
+
+    <!-- Ajouter le SDK Firebase -->
+    <script type="module">
+        // Importer les fonctions nécessaires du SDK Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
+
+        // Configuration Firebase (votre configuration spécifique)
+        const firebaseConfig = {
+            apiKey: "AIzaSyB5q89tynS7J74xa6W8zbwZflpU98uxRag",
+            authDomain: "reparations-d4b81.firebaseapp.com",
+            databaseURL: "https://reparations-d4b81-default-rtdb.firebaseio.com",
+            projectId: "reparations-d4b81",
+            storageBucket: "reparations-d4b81.firebasestorage.app",
+            messagingSenderId: "445121565052",
+            appId: "1:445121565052:web:4d549a853bddba200d14f9"
+        };
+
+        // Initialiser Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Gestion de la soumission du formulaire
+        const form = document.getElementById("contactForm");
+        form.addEventListener("submit", function (e) {
+            e.preventDefault(); // Empêcher le rechargement de la page
+
+            // Récupérer les valeurs du formulaire
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value || null; // Email facultatif
+            const message = document.getElementById("messageField").value;
+
+            // Référence à la base de données
+            const messagesRef = ref(database, "messages");
+
+            // Créer l'objet de message
+            const messageData = {
+                name: name,
+                message: message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            };
+
+            // Ajouter l'email s'il est fourni
+            if (email) {
+                messageData.email = email;
+            }
+
+            // Ajouter une nouvelle entrée
+            const newMessageRef = push(messagesRef);
+            set(newMessageRef, messageData)
+            .then(() => {
+                alert("Message envoyé avec succès !");
+                form.reset(); // Réinitialiser le formulaire
+                // Redirection après l'envoi
+                window.location.href = "home.html"; // Changez l'URL pour votre page de confirmation
+            })
+            .catch((error) => {
+                console.error("Erreur lors de l'envoi du message : ", error);
+                alert("Une erreur est survenue. Veuillez réessayer.");
+            });
+        });
+    </script>
 </body>
 </html>
 
