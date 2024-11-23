@@ -11,7 +11,6 @@
             margin: 0;
             padding: 20px;
         }
-
         .form-container {
             background-color: #fff;
             padding: 20px;
@@ -19,16 +18,13 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
-
         h2 {
             margin-bottom: 20px;
         }
-
         label {
             display: block;
             margin-bottom: 5px;
         }
-
         input, textarea {
             width: 100%;
             padding: 10px;
@@ -36,7 +32,6 @@
             border: 1px solid #ccc;
             border-radius: 4px;
         }
-
         button {
             background-color: #28a745;
             color: #fff;
@@ -45,7 +40,6 @@
             border-radius: 4px;
             cursor: pointer;
         }
-
         button:hover {
             background-color: #218838;
         }
@@ -57,23 +51,18 @@
         <form id="contactForm">
             <label for="name">Nom :</label>
             <input type="text" id="name" name="name" required>
-
             <label for="email">Email (facultatif) :</label>
             <input type="email" id="email" name="email">
-
             <label for="messageField">Message :</label>
             <textarea id="messageField" name="message" rows="4" required></textarea>
-
             <button type="submit">Envoyer</button>
         </form>
     </div>
-
     <!-- Ajouter le SDK Firebase -->
     <script type="module">
         // Importer les fonctions nécessaires du SDK Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
         import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js";
-
         // Configuration Firebase (votre configuration spécifique)
     const firebaseConfig = {
         apiKey: process.env.FIREBASE_API_KEY,
@@ -84,27 +73,20 @@
         messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
         appId: process.env.FIREBASE_APP_ID
     };
-
     export default firebaseConfig;
-
-
         // Initialiser Firebase
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-
         // Gestion de la soumission du formulaire
         const form = document.getElementById("contactForm");
         form.addEventListener("submit", function (e) {
             e.preventDefault(); // Empêcher le rechargement de la page
-
             // Récupérer les valeurs du formulaire
             const name = document.getElementById("name").value;
             const email = document.getElementById("email").value || null; // Email facultatif
             const message = document.getElementById("messageField").value;
-
             // Référence à la base de données
             const messagesRef = ref(database, "messages");
-
             // Créer l'objet de message
             const messageData = {
                 name: name,
@@ -112,12 +94,10 @@
                 date: new Date().toLocaleDateString(),
                 time: new Date().toLocaleTimeString()
             };
-
             // Ajouter l'email s'il est fourni
             if (email) {
                 messageData.email = email;
             }
-
             // Ajouter une nouvelle entrée
             const newMessageRef = push(messagesRef);
             set(newMessageRef, messageData)
@@ -135,7 +115,6 @@
     </script>
 </body>
 </html>
-
 
 
 

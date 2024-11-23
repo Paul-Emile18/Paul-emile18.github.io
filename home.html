@@ -123,7 +123,6 @@
         <h1>Bienvenue !</h1>
         <h2>Sachez que ce site est entièrement fait par moi. <br>Veuillez m'excuser pour les problèmes. <br>Des idées ? Dites-le moi !</h2>
     </header>
-
     <h1>Faire réparer un appareil :</h1>
     <div class="principale">
         <div class="img"><img src="images/reparation.webp" alt=""></div>
@@ -134,7 +133,6 @@
             <a href="formulaire.html"><button> Cliquez ici </button></a>
         </div>
     </div>
-
     <h1>Service d'impression 3D et de modélisation :</h1>
     <div class="principale">
         <div class="img"><img src="images/3D.jpg" alt=""></div>
@@ -144,14 +142,11 @@
             <a href="formulaire.html"><button> Cliquez ici </button></a></h2>
         </div>
     </div>
-
     <h1>Ou envoyez moi tout simplement un message pour me supporter :</h1>
     <h2>aidez moi, proposez des ameliorations pour ce site ou autre chose ! <br>Merci de votre aide !</h2>
     <a href="formulaire.html"><button> envoyer un message </button></a></h2>
-
     <h1>Réparations effectuées :</h1>
     <h2><div class="principale">Les pompes de piscine : 6 réparées avec succès.</div></h2>
-
     <div class="principale">
         <div class="img"><img src="images/pompe.jpg" alt=""></div>
         <div>
@@ -161,12 +156,10 @@
             RÉSULTAT : économisez jusqu'à 500 euros !</h2>
         </div>
     </div>
-
     <h2><div class="principale">Électroménagers</div></h2>
     <h2>Voici une liste rapide des autres appareils :</h2>
     <h2>Robot de cuisine <br> Lecteur CD <br> Thermomix <br> Plaque de cuisson <br>voitures télécomandées
     <br>calculatrice <br>et beaucoup d'autres...</h2>
-
     <!-- Section Accès Administrateur -->
     <div class="admin-container" id="adminContainer">
         <h2>Accès Administrateur</h2>
@@ -186,12 +179,10 @@
             <button id="changePasswordButton">Changer le mot de passe</button>
         </div>
     </div>
-
     <script type="module">
         // Importer Firebase SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
         import { getDatabase, ref, get, remove, child } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
-
         // Initialiser Firebase
         const firebaseConfig = {
          apiKey: process.env.FIREBASE_API_KEY,
@@ -202,19 +193,15 @@
           messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
           appId: process.env.FIREBASE_APP_ID
         };
-
      export default firebaseConfig;
-
      const app = initializeApp(firebaseConfig);
      const db = getDatabase(app);
-
         // Fonction pour récupérer et afficher les messages
      function displayMessages() {
             const messagesRef = ref(db, 'messages');
             get(messagesRef).then((snapshot) => {
                 const adminMessagesContainer = document.getElementById('adminMessages');
                 adminMessagesContainer.innerHTML = '';
-
               if (snapshot.exists()) {
                   const messages = snapshot.val();
                   for (let id in messages) {
@@ -238,7 +225,6 @@
              console.error("Erreur lors de la récupération des messages :", error);
           });
       }
-
      // Fonction pour supprimer un message
       window.deleteMessage = function(id) { // Ajouter la fonction à l'objet global pour le rendre accessible dans le DOM
            const messageRef = ref(db, `messages/${id}`);
@@ -254,7 +240,6 @@
                  console.error("Erreur lors de la suppression :", error);
              });
      };
-
       // Connexion administrateur
         document.getElementById('adminButton').addEventListener('click', function() {
           const password = document.getElementById('adminPassword').value;
