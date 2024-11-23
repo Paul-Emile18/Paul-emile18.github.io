@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reparations@gragnague</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(244, 244, 244, 0.8)), url('images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-top: 20px;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .principale {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .principale:hover {
+            transform: scale(1.02);
+        }
+        .principale .img {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .principale .img img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .principale div {
+            flex: 2;
+        }
+        .admin-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        .admin-container h2 {
+            margin-bottom: 20px;
+        }
+        .admin-container label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .admin-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .admin-container button {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .admin-container button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        #adminContent {
+            display: none;
+        }
+    
+        /* Styles pour les écrans de téléphone */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            h1 {
+                font-size: 1.8em; /* Réduire les tailles de police */
+            }
+            h2 {
+                font-size: 1.2em;
+            }
+            .principale {
+                flex-direction: column; /* Empile les éléments verticalement */
+                text-align: center;
+            }
+            .principale .img {
+                margin-right: 0;
+                margin-bottom: 10px; /* Ajoute de l'espace entre les images et le texte */
+            }
+            .admin-container {
+                padding: 15px;
+            }
+            .admin-container input, .admin-container button {
+                width: 100%; /* Étendre les champs sur toute la largeur */
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <header>
+        <h1>Bienvenue !</h1>
+        <h2>Sachez que ce site est entièrement fait par moi. <br>Veuillez m'excuser pour les problèmes. <br>Des idées ? Dites-le moi !</h2>
+    </header>
+
+    <h1>Faire réparer un appareil :</h1>
+    <div class="principale">
+        <div class="img"><img src="images/reparation.webp" alt=""></div>
+        <div>
+            <h2>Grâce à ce site, envoyez-moi un formulaire expliquant <br> le problème,
+            et je vous contacterai pour récupérer <br> l'appareil et le réparer. <br>
+            Pour plus d'infos, contactez-moi.</h2>
+            <a href="formulaire.html"><button> Cliquez ici </button></a>
+        </div>
+    </div>
+
+    <h1>Service d'impression 3D et de modélisation :</h1>
+    <div class="principale">
+        <div class="img"><img src="images/3D.jpg" alt=""></div>
+        <div>
+            <h2>Une pièce cassée et introuvable ? <br> Voici la solution ! <br>
+            Contactez-moi et faites modéliser et <br> imprimer votre pièce sur mesure ! <br>
+            <a href="formulaire.html"><button> Cliquez ici </button></a></h2>
+        </div>
+    </div>
+
+    <h1>Ou envoyez moi tout simplement un message pour me supporter :</h1>
+    <h2>aidez moi, proposez des ameliorations pour ce site ou autre chose ! <br>Merci de votre aide !</h2>
+    <a href="formulaire.html"><button> envoyer un message </button></a></h2>
+
+    <h1>Réparations effectuées :</h1>
+    <h2><div class="principale">Les pompes de piscine : 6 réparées avec succès.</div></h2>
+
+    <div class="principale">
+        <div class="img"><img src="images/pompe.jpg" alt=""></div>
+        <div>
+            <h2>Les pompes de piscine sont chères et tombent facilement
+            en panne à cause de l'eau. <br> Il suffit de les démonter et
+            de changer les roulements, et elles repartent pour 3-4 ans ! <br>
+            RÉSULTAT : économisez jusqu'à 500 euros !</h2>
+        </div>
+    </div>
+
+    <h2><div class="principale">Électroménagers</div></h2>
+    <h2>Voici une liste rapide des autres appareils :</h2>
+    <h2>Robot de cuisine <br> Lecteur CD <br> Thermomix <br> Plaque de cuisson <br>voitures télécomandées
+    <br>calculatrice <br>et beaucoup d'autres...</h2>
+
+    <!-- Section Accès Administrateur -->
+    <div class="admin-container" id="adminContainer">
+        <h2>Accès Administrateur</h2>
+        <label for="adminPassword">Mot de passe :</label>
+        <input type="password" id="adminPassword" required>
+        <button id="adminButton">Se connecter</button>
+        <div id="adminContent">
+            <h3>Bienvenue, Administrateur !</h3>
+            <p>Voici les messages stockés :</p>
+            <div id="adminMessages"></div>
+            <button id="clearMessagesButton">Vider les messages</button>
+            <h4>Changer le mot de passe :</h4>
+            <label for="newPassword">Nouveau mot de passe :</label>
+            <input type="password" id="newPassword" required>
+            <label for="confirmPassword">Confirmer le mot de passe :</label>
+            <input type="password" id="confirmPassword" required>
+            <button id="changePasswordButton">Changer le mot de passe</button>
+        </div>
+    </div>
+
+    <script type="module">
+        // Importer Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+        import { getDatabase, ref, get, remove, child } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+
+        // Initialiser Firebase
+        const firebaseConfig = {
+         apiKey: process.env.FIREBASE_API_KEY,
+         authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+          databaseURL: process.env.FIREBASE_DATABASE_URL,
+          projectId: process.env.FIREBASE_PROJECT_ID,
+          storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+          messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+          appId: process.env.FIREBASE_APP_ID
+        };
+
+     export default firebaseConfig;
+
+     const app = initializeApp(firebaseConfig);
+     const db = getDatabase(app);
+
+        // Fonction pour récupérer et afficher les messages
+     function displayMessages() {
+            const messagesRef = ref(db, 'messages');
+            get(messagesRef).then((snapshot) => {
+                const adminMessagesContainer = document.getElementById('adminMessages');
+                adminMessagesContainer.innerHTML = '';
+
+              if (snapshot.exists()) {
+                  const messages = snapshot.val();
+                  for (let id in messages) {
+                      const msg = messages[id];
+                      adminMessagesContainer.innerHTML += `
+                           <div id="message-${id}">
+                              <strong>Nom :</strong> ${msg.name} <br>
+                                <strong>Email :</strong> ${msg.email} <br>
+                                <strong>Message :</strong> ${msg.message} <br>
+                                <strong>Date :</strong> ${msg.date} <br>
+                                <strong>Heure :</strong> ${msg.time} <br>
+                                <button onclick="deleteMessage('${id}')">Supprimer</button>
+                                <hr>
+                         </div>
+                     `;
+                 }
+              } else {
+                  adminMessagesContainer.innerHTML = '<p>Aucun message trouvé.</p>';
+              }
+         }).catch((error) => {
+             console.error("Erreur lors de la récupération des messages :", error);
+          });
+      }
+
+     // Fonction pour supprimer un message
+      window.deleteMessage = function(id) { // Ajouter la fonction à l'objet global pour le rendre accessible dans le DOM
+           const messageRef = ref(db, `messages/${id}`);
+          remove(messageRef)
+             .then(() => {
+                 alert("Message supprimé.");
+                 const messageElement = document.getElementById(`message-${id}`);
+                 if (messageElement) {
+                     messageElement.remove(); // Supprime le message de l'interface immédiatement
+                 }
+                })
+                .catch((error) => {
+                 console.error("Erreur lors de la suppression :", error);
+             });
+     };
+
+      // Connexion administrateur
+        document.getElementById('adminButton').addEventListener('click', function() {
+          const password = document.getElementById('adminPassword').value;
+           const correctPassword = "admin123"; // Mot de passe par défaut
+          if (password === correctPassword) {
+              document.getElementById('adminContent').style.display = 'block';
+              displayMessages();
+          } else {
+              alert("Mot de passe incorrect.");
+          }
+     });
+    </script>
+</body>
+</html>
